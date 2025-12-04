@@ -31,10 +31,10 @@ class StockPopulation(Population):
         # Initial population
         population = self.get_initial_population(gene_lower_limit, gene_upper_limit)
         # Set condition if a condition is required
-        if isinstance(self.termination, Stagnation) is True:
+        if isinstance(self.termination, Stagnation):
             self.termination.condition = deepcopy(population)
         generation = 1
-        while self.termination.terminate() is False:
+        while not self.termination.terminate():
             survivors = self.selection.get_survivors(population)
             pairs = self.recombination.pair(survivors)
             # Breed each pair of parents
@@ -50,7 +50,7 @@ class StockPopulation(Population):
                 individual.fitness = self.objective.fitness(individual)
             # Sort by highest fitness first
             population.sort(key=lambda individual: individual.fitness, reverse=True)
-            if isinstance(self.termination, Stagnation) is True:
+            if isinstance(self.termination, Stagnation):
                 self.termination.condition = deepcopy(population)
             generation += 1
             # Logg

@@ -41,7 +41,8 @@ class PrivataAffarer(BaseParser):
 
 class IBIndexStocks(BaseParser):
     def parse_content(self, html: str) -> DataFrame:
-        products = ast.literal_eval(html)
+        cleaned = html.replace('null', 'None')
+        products = ast.literal_eval(cleaned)
         df_rows = []
         for product in products:
             stock = product['productName']

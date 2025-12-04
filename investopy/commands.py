@@ -17,4 +17,4 @@ class IBIndex:
         # TODO: Implement survey, receiver(s) etc
         if self.receiver is not None:
             return self.receiver.action()
-        return
+        return None

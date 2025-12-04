@@ -86,7 +86,11 @@ class ApproxPortfolio(Calculator):
 
         # Save result to data variable
         self.data = portfolio.merge(stocks, how="left", on=to_merge[0])
-        self.data = self.data.apply(to_numeric, errors='ignore')
+        for col in self.data.columns:
+            try:
+                self.data[col] = to_numeric(self.data[col])
+            except (ValueError, TypeError):
+                pass
 
     def run(self) -> DataFrame:
         # Ensure excluded stocks are removed
